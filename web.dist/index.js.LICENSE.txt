@@ -1,0 +1,20 @@
+/*!
+ * domsi <https://github.com/Kenneth-LJS/domsi>
+ *
+ * Copyright (c) 2021-Present, Ken <@Kenneth-LJS> (https://github.com/Kenneth-LJS)
+ * Released under the MIT license.
+ */
+
+/*!
+ * hex-color-regex <https://github.com/regexps/hex-color-regex>
+ *
+ * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
+ * Released under the MIT license.
+ */
+
+/*!
+ * repeat-element <https://github.com/jonschlinkert/repeat-element>
+ *
+ * Copyright (c) 2015-present, Jon Schlinkert.
+ * Licensed under the MIT license.
+ */

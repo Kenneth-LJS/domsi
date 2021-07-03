@@ -4,6 +4,9 @@
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "webpack --config webpack.prod.js && npm run buildTypes",
         "buildTypes": "tsc --outFile dist/index.d.ts",
