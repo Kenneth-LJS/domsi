@@ -164,7 +164,7 @@ function buildDomsiTree(element: any, parent?: any) {
         element: element,
         parent: parent
     } as any;
-    let children = [];
+    const children = [];
     for (const childElem of element.childNodes) {
         children.push(buildDomsiTree(childElem, treeNode));
     }
@@ -323,7 +323,7 @@ function isValueMatch(value, valueSelector) {
         return false;
     }
     if (valueSelector.type == 'and') {
-        for (let operand of valueSelector.operands) {
+        for (const operand of valueSelector.operands) {
             if (!isValueMatch(value, operand)) {
                 return false;
             }
@@ -331,7 +331,7 @@ function isValueMatch(value, valueSelector) {
         return true;
     }
     if (valueSelector.type == 'or') {
-        for (let operand of valueSelector.operands) {
+        for (const operand of valueSelector.operands) {
             if (isValueMatch(value, operand)) {
                 return true;
             }
@@ -359,7 +359,7 @@ function isColorValueSelectorMatch(value, valueSelector) {
         return new RegExp(valueSelector.regex, valueSelector.flags).test(value);
     }
     if (valueSelector.type == 'and') {
-        for (let operand of valueSelector.operands) {
+        for (const operand of valueSelector.operands) {
             if (!isColorValueMatch(value, operand)) {
                 return false;
             }
@@ -367,7 +367,7 @@ function isColorValueSelectorMatch(value, valueSelector) {
         return true;
     }
     if (valueSelector.type == 'or') {
-        for (let operand of valueSelector.operands) {
+        for (const operand of valueSelector.operands) {
             if (isColorValueMatch(value, operand)) {
                 return true;
             }
@@ -391,7 +391,7 @@ function isColorValueMatch(value1, value2) {
 
 // Color compare script from: https://gist.github.com/oriadam/396a4beaaad465ca921618f2f2444d49
 // return array of [r,g,b,a] from any valid color. if failed returns undefined
-let colorValuesCache = {};
+const colorValuesCache = {};
 function colorValues(color) {
     if (!color) {
         return;
@@ -419,8 +419,8 @@ function colorValues(color) {
     if (!result) {
         if (color.indexOf('rgb') === -1) {
             // convert named colors
-            var temp_elem = document.body.appendChild(document.createElement('akflkwqhfelaksfkahsdfhaofihxqwomfhqowih')); // intentionally use unknown tag to lower chances of css rule override with !important
-            var flag = 'rgb(1, 2, 3)'; // this flag tested on chrome 59, ff 53, ie9, ie10, ie11, edge 14
+            const temp_elem = document.body.appendChild(document.createElement('akflkwqhfelaksfkahsdfhaofihxqwomfhqowih')); // intentionally use unknown tag to lower chances of css rule override with !important
+            const flag = 'rgb(1, 2, 3)'; // this flag tested on chrome 59, ff 53, ie9, ie10, ie11, edge 14
             temp_elem.style.color = flag;
             if (temp_elem.style.color !== flag) {
                 return; // color set failed - some monstrous css rule is probably taking over the color of our object
@@ -436,8 +436,8 @@ function colorValues(color) {
             if (color.indexOf('rgba') === -1) {
                 color += ',1'; // convert 'rgb(R,G,B)' to 'rgb(R,G,B)A' which looks awful but will pass the regxep below
             }
-            result = color.match(/[\.\d]+/g).map(function(a) {
-                return +a
+            result = color.match(/[.\d]+/g).map(function(a) {
+                return +a;
             });
         }
     }
@@ -448,11 +448,6 @@ function colorValues(color) {
 function reversed(arr) {
     return [...arr].reverse();
 }
-
-const domsi = {
-    find: domsiFind,
-    findAll: domsiFindAll,
-};
 
 module.exports.find = domsiFind;
 module.exports.findAll = domsiFindAll;
