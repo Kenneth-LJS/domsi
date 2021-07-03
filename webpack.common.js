@@ -1,6 +1,8 @@
 module.exports = {
     mode: 'production',
-    entry: './src/index.ts',
+    resolve: {
+        extensions: ["", ".ts", ".js"],
+    },
     module: {
         rules: [
             {
@@ -19,8 +21,5 @@ module.exports = {
                 ],
             },
         ],
-    },
-    resolve: {
-        extensions: ["", ".ts", ".js"],
     },
 };
