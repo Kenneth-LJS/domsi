@@ -8,6 +8,7 @@
         "build": "webpack --config webpack.prod.js && tsc --outFile dist/index.d.ts",
         "buildWeb": "webpack --config webpack.web.js",
         "prepublish": "npm run build",
+        "lint": "eslint src/**",
         "test": "test"
     },
     "repository": {
@@ -27,7 +28,12 @@
         "@babel/core": "^7.14.6",
         "@babel/preset-env": "^7.14.7",
         "@babel/preset-typescript": "^7.14.5",
+        "@typescript-eslint/eslint-plugin": "^4.28.1",
+        "@typescript-eslint/parser": "^4.28.1",
         "babel-loader": "^8.2.2",
+        "eslint": "^7.30.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^3.4.0",
         "ts-loader": "^9.2.3",
         "typescript": "^4.3.5",
         "webpack": "^5.42.0",
