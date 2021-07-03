@@ -1,16 +1,26 @@
 module.exports = {
     mode: 'production',
-    entry: './src/index.js',
+    entry: './src/index.ts',
     module: {
         rules: [
             {
-                test: /\.js?$/,
+                test: /\.[jt]s$/,
                 exclude: /(node_modules)/,
-                use: 'babel-loader',
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                '@babel/preset-env',
+                                '@babel/preset-typescript',
+                            ],
+                        },
+                    },
+                ],
             },
         ],
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ["", ".ts", ".js"],
     },
 };

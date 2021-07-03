@@ -1,4 +1,6 @@
-function domsiFind(domsiSelector, element) {
+import { Selector } from './types';
+
+function domsiFind(domsiSelector: Selector, element) {
     return domsiFindAll(domsiSelector, element)[0];
 }
 
@@ -97,7 +99,7 @@ function domsiFindAll(domsiSelector, element) {
 function domsiNodeToDomsiElement(domsiNode, domsiSelector) {
     let children = {};
     if (domsiSelector.children) {
-        for (const [identifier, childSelectorData] of Object.entries(domsiSelector.children)) {
+        for (const [identifier, childSelectorData] of Object.entries(domsiSelector.children) as any) {
             const childSelectorType = childSelectorData.type;
             const childIsTransparent = !!childSelectorData.transparent;
             const childSelector = childSelectorData.selector;
@@ -157,11 +159,11 @@ function isDomsiMatch(domsiNode, domsiSelector) {
     return true;
 }
 
-function buildDomsiTree(element, parent) {
+function buildDomsiTree(element: any, parent?: any) {
     const treeNode = {
         element: element,
         parent: parent
-    };
+    } as any;
     let children = [];
     for (const childElem of element.childNodes) {
         children.push(buildDomsiTree(childElem, treeNode));
@@ -194,7 +196,7 @@ function isDomsiChildrenMatch(domsiNode, domsiSelector) {
     if (!domsiSelector.children) {
         return true;
     }
-    for (const childSelector of Object.values(domsiSelector.children)) {
+    for (const childSelector of Object.values(domsiSelector.children) as any[]) {
         const childSelectorType = childSelector.type;
         const childSelectorIID = childSelector.selector.__iid;
 
@@ -321,7 +323,7 @@ function isValueMatch(value, valueSelector) {
         return false;
     }
     if (valueSelector.type == 'and') {
-        for (operand of valueSelector.operands) {
+        for (let operand of valueSelector.operands) {
             if (!isValueMatch(value, operand)) {
                 return false;
             }
@@ -329,7 +331,7 @@ function isValueMatch(value, valueSelector) {
         return true;
     }
     if (valueSelector.type == 'or') {
-        for (operand of valueSelector.operands) {
+        for (let operand of valueSelector.operands) {
             if (isValueMatch(value, operand)) {
                 return true;
             }
@@ -357,7 +359,7 @@ function isColorValueSelectorMatch(value, valueSelector) {
         return new RegExp(valueSelector.regex, valueSelector.flags).test(value);
     }
     if (valueSelector.type == 'and') {
-        for (operand of valueSelector.operands) {
+        for (let operand of valueSelector.operands) {
             if (!isColorValueMatch(value, operand)) {
                 return false;
             }
@@ -365,7 +367,7 @@ function isColorValueSelectorMatch(value, valueSelector) {
         return true;
     }
     if (valueSelector.type == 'or') {
-        for (operand of valueSelector.operands) {
+        for (let operand of valueSelector.operands) {
             if (isColorValueMatch(value, operand)) {
                 return true;
             }
