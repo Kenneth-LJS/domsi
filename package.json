@@ -5,7 +5,8 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "webpack --config webpack.prod.js && tsc --outFile dist/index.d.ts",
+        "build": "webpack --config webpack.prod.js && npm run buildTypes",
+        "buildTypes": "tsc --outFile dist/index.d.ts",
         "buildWeb": "webpack --config webpack.web.js",
         "prepublish": "npm run build",
         "lint": "eslint src/**",

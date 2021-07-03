@@ -4,6 +4,7 @@
         "src/**/*.ts"
     ],
     "compilerOptions": {
+        "outDir": "dist",
         "declaration": true,
         "emitDeclarationOnly": true,
         "allowJs": true,
