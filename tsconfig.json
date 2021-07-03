@@ -6,6 +6,17 @@
     "compilerOptions": {
         "declaration": true,
         "emitDeclarationOnly": true,
-        "allowJs": true
+        "allowJs": true,
+        "forceConsistentCasingInFileNames": true,
+        "experimentalDecorators": true,
+        "noImplicitAny": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "skipLibCheck": true,
+        "strictNullChecks": false,
+        "strictFunctionTypes": true,
+        "suppressImplicitAnyIndexErrors": true
     }
 }

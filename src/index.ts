@@ -1,10 +1,10 @@
 import { Selector } from './types';
 
-function domsiFind(domsiSelector: Selector, element) {
+function domsiFind(domsiSelector: Selector, element: any) {
     return domsiFindAll(domsiSelector, element)[0];
 }
 
-function domsiFindAll(domsiSelector, element) {
+function domsiFindAll(domsiSelector: any, element: any) {
     // Deep clone to leave the original selector unmodified
     domsiSelector = JSON.parse(JSON.stringify(domsiSelector));
 
@@ -91,12 +91,12 @@ function domsiFindAll(domsiSelector, element) {
     const matchedNodes = domsiNodes[0].__domsiMatchChildren[firstSelectorIID];
 
     // Turn nodes into result
-    const domsiElements = matchedNodes.map(matchedNode => domsiNodeToDomsiElement(matchedNode, domsiSelector));
+    const domsiElements = matchedNodes.map((matchedNode: any) => domsiNodeToDomsiElement(matchedNode, domsiSelector));
     domsiElements.reverse();
     return domsiElements;
 }
 
-function domsiNodeToDomsiElement(domsiNode, domsiSelector) {
+function domsiNodeToDomsiElement(domsiNode: any, domsiSelector: any) {
     let children = {};
     if (domsiSelector.children) {
         for (const [identifier, childSelectorData] of Object.entries(domsiSelector.children) as any) {
@@ -113,7 +113,7 @@ function domsiNodeToDomsiElement(domsiNode, domsiSelector) {
                 childrenResult = domsiNodeToDomsiElement(childNode, childSelector);
             } else if (childSelectorType == 'multiple') {
                 const matchedChildren = domsiNode.__domsiMatchChildren[childSelectorIID];
-                childrenResult = matchedChildren.map(childNode => domsiNodeToDomsiElement(childNode, childSelector));
+                childrenResult = matchedChildren.map((childNode: any) => domsiNodeToDomsiElement(childNode, childSelector));
                 childrenResult.reverse();
             } else {
                 // todo: raise Exception
@@ -138,7 +138,7 @@ function domsiNodeToDomsiElement(domsiNode, domsiSelector) {
     return domsiElement;
 }
 
-function isDomsiMatch(domsiNode, domsiSelector) {
+function isDomsiMatch(domsiNode: any, domsiSelector: any) {
     const selectorIID = domsiSelector.__iid;
 
     // A selected item cannot contain a child that also matches the selector
@@ -172,7 +172,7 @@ function buildDomsiTree(element: any, parent?: any) {
     return treeNode;
 }
 
-function updateDomsiNodeMatch(selector, node) {
+function updateDomsiNodeMatch(selector: any, node: any) {
     // Remember that the current node matches
     node.__isDomsiMatch[selector.__iid] = true;
 
@@ -192,7 +192,7 @@ function updateDomsiNodeMatch(selector, node) {
     }
 }
 
-function isDomsiChildrenMatch(domsiNode, domsiSelector) {
+function isDomsiChildrenMatch(domsiNode: any, domsiSelector: any) {
     if (!domsiSelector.children) {
         return true;
     }
@@ -214,7 +214,7 @@ function isDomsiChildrenMatch(domsiNode, domsiSelector) {
     return true;
 }
 
-function isDomsiElemMatch(elem, domsiSelector) {
+function isDomsiElemMatch(elem: any, domsiSelector: any) {
     if (domsiSelector.tagName && !isTagNameMatch(elem, domsiSelector.tagName)) {
         return false;
     } else if (domsiSelector.attribute && !isAttributeMatch(elem, domsiSelector.attribute)) {
@@ -231,11 +231,11 @@ function isDomsiElemMatch(elem, domsiSelector) {
     return true;
 }
 
-function isTagNameMatch(elem, tagNameSelector) {
+function isTagNameMatch(elem: any, tagNameSelector: any) {
     return isValueMatch((elem.tagName || '').toLowerCase(), tagNameSelector);
 }
 
-function isAttributeMatch(elem, attributeSelector) {
+function isAttributeMatch(elem: any, attributeSelector: any) {
     if (!elem.getAttribute) {
         return false;
     }
@@ -247,7 +247,7 @@ function isAttributeMatch(elem, attributeSelector) {
     return true;
 }
 
-function isComputedAttributeMatch(elem, attributeSelector) {
+function isComputedAttributeMatch(elem: any, attributeSelector: any) {
     for (const [attributeName, valueSelector] of Object.entries(attributeSelector)) {
         if (!isValueMatch(elem[attributeName], valueSelector)) {
             return false;
@@ -256,7 +256,7 @@ function isComputedAttributeMatch(elem, attributeSelector) {
     return true;
 }
 
-function isPropertyMatch(elem, propertySelector) {
+function isPropertyMatch(elem: any, propertySelector: any) {
     for (const [propertyName, valueSelector] of Object.entries(propertySelector)) {
         if (!isValueMatch(elem[propertyName], valueSelector)) {
             return false;
@@ -265,7 +265,7 @@ function isPropertyMatch(elem, propertySelector) {
     return true;
 }
 
-function isCssMatch(elem, cssSelector) {
+function isCssMatch(elem: any, cssSelector: any) {
     if (elem.nodeType != Node.ELEMENT_NODE) {
         return false;
     }
@@ -282,11 +282,11 @@ function isCssMatch(elem, cssSelector) {
     return true;
 }
 
-function isTextMatch(elem, textSelector) {
+function isTextMatch(elem: any, textSelector: any) {
     return isValueMatch(elem.innerText, textSelector);
 }
 
-function isValueMatch(value, valueSelector) {
+function isValueMatch(value: any, valueSelector: any): boolean {
     if (typeof valueSelector == 'number' || typeof valueSelector == 'string') {
         return value == valueSelector;
     }
@@ -344,7 +344,7 @@ function isValueMatch(value, valueSelector) {
     return false;
 }
 
-function isColorValueSelectorMatch(value, valueSelector) {
+function isColorValueSelectorMatch(value: any, valueSelector: any) {
     if (typeof valueSelector == 'number' || typeof valueSelector == 'string') {
         return isColorValueMatch(value, valueSelector);
     }
@@ -380,7 +380,7 @@ function isColorValueSelectorMatch(value, valueSelector) {
     return false;
 }
 
-function isColorValueMatch(value1, value2) {
+function isColorValueMatch(value1: any, value2: any) {
     value1 = colorValues(value1);
     value2 = colorValues(value2);
     return value1[0] == value2[0]
@@ -392,7 +392,7 @@ function isColorValueMatch(value1, value2) {
 // Color compare script from: https://gist.github.com/oriadam/396a4beaaad465ca921618f2f2444d49
 // return array of [r,g,b,a] from any valid color. if failed returns undefined
 const colorValuesCache = {};
-function colorValues(color) {
+function colorValues(color: any) {
     if (!color) {
         return;
     }
@@ -436,7 +436,7 @@ function colorValues(color) {
             if (color.indexOf('rgba') === -1) {
                 color += ',1'; // convert 'rgb(R,G,B)' to 'rgb(R,G,B)A' which looks awful but will pass the regxep below
             }
-            result = color.match(/[.\d]+/g).map(function(a) {
+            result = color.match(/[.\d]+/g).map(function(a: any) {
                 return +a;
             });
         }
@@ -445,7 +445,7 @@ function colorValues(color) {
     return result;
 }
 
-function reversed(arr) {
+function reversed(arr: any) {
     return [...arr].reverse();
 }
 

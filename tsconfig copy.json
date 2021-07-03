@@ -3,7 +3,8 @@
         "src/**/*.ts"
     ],
     "compilerOptions": {
-        "declaration": true,
+        "outDir": "dist",
+        "declaration": false,
         "emitDeclarationOnly": true,
         "forceConsistentCasingInFileNames": true,
         "experimentalDecorators": true,
