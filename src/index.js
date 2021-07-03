@@ -452,7 +452,5 @@ const domsi = {
     findAll: domsiFindAll,
 };
 
-if (typeof module !== 'undefined') {
-    module.exports.find = domsiFind;
-    module.exports.findAll = domsiFindAll;
-}
+module.exports.find = domsiFind;
+module.exports.findAll = domsiFindAll;
