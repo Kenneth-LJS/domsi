@@ -1,0 +1,22 @@
+{
+  "name": "domsi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "domsi.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Kenneth-LJS@github.com/Kenneth-LJS/domsi.git"
+  },
+  "author": "kenneth_ljs <kenneth_ljs@live.com> (https://github.com/Kenneth-LJS)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kenneth-LJS/domsi/issues"
+  },
+  "homepage": "https://github.com/Kenneth-LJS/domsi#readme",
+  "keywords": [
+    "test"
+  ]
+}
