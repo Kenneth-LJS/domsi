@@ -15,10 +15,20 @@ export interface DomsiNullValueSelector {
     type: 'null';
 }
 
-export interface DomsiCompareValueSelector<T> {
+export type DomsiCompareValueSelector<T>
+    = DomsiCompareValueEqualitySelector<T>
+    | DomsiCompareValueOrderingSelector<T>;
+
+export interface DomsiCompareValueEqualitySelector<T> {
     type: 'compare';
-    operator: '==' | '!=' | '===' | '!==' | '>' | '>=' | '<' | '<=';
+    operator: '==' | '!=' | '===' | '!==';
     value: T;
+}
+
+export interface DomsiCompareValueOrderingSelector<T> {
+    type: 'compare';
+    operator: '>' | '>=' | '<' | '<=';
+    value: Exclude<T, undefined>;
 }
 
 export interface DomsiRegexValueSelector {

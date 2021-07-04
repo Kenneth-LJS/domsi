@@ -1,2 +1,4 @@
 - Add validator
 - Add custom matcher? -> allow use of smaller files if no need for complex css property check
+- update the input-deep-clone -> join the combiner and children unroller
+- write tests

@@ -1,33 +1,40 @@
-import { DomsiCssColorValue, DomsiCssColorValueSelector, DomsiCssSelector } from '../types/selectors/css-selector';
+import { CssPropertyNames, DomsiCssColorValue, DomsiCssColorValueSelector, DomsiCssSelector } from '../types/selectors/css-selector';
 import { isValueMatch } from './value-matcher';
 import { CssColorPropertyNames, CssShorthandExpanders } from '../constants/css-selector';
-
-import rgba from 'color-rgba';
-import { DomsiHTMLNode } from '../types/public';
+import { HTMLNode } from '../types/html-node';
 import { hasOwnProperty } from '../utils/object';
 
-export function isCssMatch(nodeElem: DomsiHTMLNode, cssSelector: DomsiCssSelector): boolean {
+import rgba from 'color-rgba';
+import { DomsiValue } from '../types/selectors/value-selector';
+
+export function isCssMatch(node: HTMLNode, cssSelector: DomsiCssSelector): boolean {
     if (typeof cssSelector === 'undefined') {
         return true;
     }
-    if (!(nodeElem instanceof Element)) {
+    if (!(node instanceof Element)) {
         return false;
     }
-    const elemStyles = getComputedStyle(nodeElem);
+    const elemStyles = getComputedStyle(node);
     for (const [cssPropertyName, valueSelector] of Object.entries(cssSelector)) {
         if ((<any>Object).values(CssColorPropertyNames).includes(cssPropertyName)) {
             // Color property
-            if (!isColorValueSelectorMatch(elemStyles[cssPropertyName], valueSelector)) {
+            if (!isColorValueSelectorMatch(elemStyles[cssPropertyName as CssPropertyNames] as DomsiCssColorValue, valueSelector)) {
                 return false;
             }
-        } else if (!isValueMatch(elemStyles[cssPropertyName], valueSelector)) {
+        } else if (!isValueMatch(elemStyles[cssPropertyName as CssPropertyNames] as DomsiValue, valueSelector)) {
             return false;
         }
     }
     return true;
 }
 
-function isColorValueSelectorMatch(value: string, valueSelector: DomsiCssColorValueSelector): boolean {
+function isColorValueSelectorMatch(value: DomsiCssColorValue, valueSelector: DomsiCssColorValueSelector): boolean {
+    if (typeof valueSelector == 'undefined') {
+        return true;
+    }
+    if (typeof value == 'undefined') {
+        return false;
+    }
     if (typeof valueSelector == 'number') {
         return false;
     }
@@ -65,9 +72,14 @@ function isColorValueSelectorMatch(value: string, valueSelector: DomsiCssColorVa
     return false;
 }
 
-function isColorValueMatch(value1: DomsiCssColorValue, value2: DomsiCssColorValue) {
+function isColorValueMatch(value1: Exclude<DomsiCssColorValue, undefined>, value2: Exclude<DomsiCssColorValue, undefined>) {
     const value1Arr = rgba(value1);
     const value2Arr = rgba(value2);
+    if (typeof value1Arr === 'undefined') {
+        return typeof value2Arr === 'undefined';
+    } else if (typeof value2Arr === 'undefined') {
+        return false;
+    }
     return value1Arr[0] == value2Arr[0]
         && value1Arr[1] == value2Arr[1]
         && value1Arr[2] == value2Arr[2]
@@ -85,7 +97,7 @@ export function expandCssSelector(cssSelector: DomsiCssSelector) {
             if (!hasOwnProperty(cssSelector, propertyName)) {
                 return;
             }
-            const expanded = expander.expand(propertyName, cssSelector[propertyName]);
+            const expanded = expander.expand(propertyName, cssSelector[propertyName as keyof DomsiCssSelector] as string);
             const normalizedExpanded = normalizeCssPropertyMapNames(expanded);
             Object.assign(expandedCssSelector, normalizedExpanded);
         });
@@ -94,13 +106,14 @@ export function expandCssSelector(cssSelector: DomsiCssSelector) {
     return Object.assign({}, expandCssSelector, cssSelector);
 }
 
-function normalizeCssPropertyMapNames(cssPropertyMap: { [name: string]: any }): { [name: string]: any } {
-    const output = {};
+function normalizeCssPropertyMapNames(cssPropertyMap: Partial<CSSStyleDeclaration>): Partial<CSSStyleDeclaration> {
+    const output = {} as Partial<CSSStyleDeclaration>;
     Object.keys(cssPropertyMap).forEach(property => {
-        const normalizedProperty = cssPropertyNameToCamelCase(property);
+        const normalizedProperty = cssPropertyNameToCamelCase(property) as keyof CssPropertyNames;
+        // @ts-expect-error
         output[normalizedProperty] = cssPropertyMap[property];
     });
-    return output;1;
+    return output;
 }
 
 function cssPropertyNameToCamelCase(cssPropertyName: string): string {

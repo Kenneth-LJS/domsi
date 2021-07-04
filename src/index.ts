@@ -5,9 +5,7 @@
  * Released under the MIT license.
  */
 
-import { domsiFind, domsiFindAll } from './domsi/domsi';
+import { domsiFind as _domsiFind, domsiFindAll as _domsiFindAll } from './domsi/domsi';
 
-export default {
-    domsiFind,
-    domsiFindAll,
-};
+export const domsiFind = _domsiFind;
+export const domsiFindAll = _domsiFindAll;

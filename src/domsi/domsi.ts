@@ -1,18 +1,19 @@
-import { isDomsiNodeMatch } from '../matcher/node-matcher';
-import { DomsiNode, IDomsiSelector as DomsiSelector } from '../types/domsi';
-import { DomsiSelector as InputDomsiSelector, DomsiHTMLNode } from '../types/public';
+import { isDomsiNodeMatch } from '../matcher/domsi-node-matcher';
+import { DomsiNode, IDomsiNodeSelector as DomsiNodeSelector } from '../types/domsi';
+import { HTMLNode } from '../types/html-node';
+import { DomsiNodeSelector as InputDomsiNodeSelector } from '../types/public';
 import { reversed } from '../utils/array';
 import { buildDomsiNodes, cloneDomsiSelector, getDomsiMatchedElements, initDomsiSelectors } from '../utils/domsi';
 
-export function domsiFind(inputDomsiSelector: InputDomsiSelector, element: Node) {
+export function domsiFind(inputDomsiSelector: InputDomsiNodeSelector, element?: Node) {
     return domsiFindAll(inputDomsiSelector, element)[0];
 }
 
-export function domsiFindAll(inputDomsiSelector: InputDomsiSelector, element?: Node) {
+export function domsiFindAll(inputDomsiSelector: InputDomsiNodeSelector, element?: Node) {
     // Deep clone to leave the original selector unmodified
     const rootDomsiSelector = cloneDomsiSelector(inputDomsiSelector);
 
-    const rootElement = (element || document) as DomsiHTMLNode;
+    const rootElement = (element || document) as HTMLNode;
 
     // Flatten DomsiSelector + assign internal IDs to each nested selector
 
@@ -30,7 +31,7 @@ export function domsiFindAll(inputDomsiSelector: InputDomsiSelector, element?: N
     return domsiElements;
 }
 
-function buildDomsiMatches(domsiSelectors: DomsiSelector[], domsiNodes: DomsiNode[]) {
+function buildDomsiMatches(domsiSelectors: DomsiNodeSelector[], domsiNodes: DomsiNode[]) {
     // The algorithm brain
     reversed(domsiSelectors).forEach(curSelector => {
         reversed(domsiNodes).forEach(curNode => {
@@ -42,7 +43,7 @@ function buildDomsiMatches(domsiSelectors: DomsiSelector[], domsiNodes: DomsiNod
     });
 }
 
-function updateDomsiNodeMatch(node: DomsiNode, selector: DomsiSelector) {
+function updateDomsiNodeMatch(node: DomsiNode, selector: DomsiNodeSelector) {
     // Track that the current node matches
     node.domsiMatch[selector.id] = true;
 

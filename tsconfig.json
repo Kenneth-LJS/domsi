@@ -1,7 +1,8 @@
 {
     "include": [
         "src/**/*.js",
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "external-types/**/*.ts"
     ],
     "compilerOptions": {
         "outDir": "dist",
@@ -10,15 +11,13 @@
         "esModuleInterop": true,
         "allowJs": true,
         "forceConsistentCasingInFileNames": true,
-        "experimentalDecorators": true,
         "noImplicitAny": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "noUnusedLocals": true,
         "skipLibCheck": true,
-        "strictNullChecks": false,
-        "strictFunctionTypes": true,
-        "suppressImplicitAnyIndexErrors": true
+        "strictNullChecks": true,
+        "strictFunctionTypes": true
     }
 }

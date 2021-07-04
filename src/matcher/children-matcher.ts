@@ -1,15 +1,16 @@
-import { DomsiNode, IDomsiSelector as DomsiSelector } from '../types/domsi';
+import { DomsiNode, IDomsiNodeSelector } from '../types/domsi';
 import { isValueMatch } from './value-matcher';
 
-export function isDomsiChildrenMatch(node: DomsiNode, selector: DomsiSelector): boolean {
+export function isDomsiChildrenMatch(domsiNode: DomsiNode, selector: IDomsiNodeSelector): boolean {
     if (!selector.children) {
         return true;
     }
-    for (const childSelector of Object.values(selector.children) as any[]) {
-        const childSelectorType = childSelector.type;
-        const childSelectorID = childSelector.selector.__id;
 
-        const childCount = node.domsiChildrenMatch[childSelectorID].length;
+    for (const childSelector of Object.values(selector.children)) {
+        const childSelectorType = childSelector.type;
+        const childSelectorID = childSelector.selector.id;
+
+        const childCount = domsiNode.domsiChildrenMatch[childSelectorID].length;
         if (childSelectorType == 'single' && childCount == 0) {
             return false;
         } else if (childSelectorType == 'multiple') {

@@ -1,30 +1,16 @@
-import { DomsiAttributeSelector } from './selectors/attribute-selector';
-import { DomsiChildrenSelector } from './selectors/children-selector';
-import { DomsiCssSelector } from './selectors/css-selector';
-import { DomsiPropertySelector } from './selectors/property-selector';
-import { DomsiTagNameSelector } from './selectors/tag-name-selector';
-import { DomsiTextSelector } from './selectors/text-selector';
+import { AbstractDomsiNodeSelector } from './selectors/abstract-node-selector';
+import { HTMLNode } from './html-node';
 
-export interface DomsiSelector {
-    tagName?: DomsiTagNameSelector;
-    attribute?: DomsiAttributeSelector;
-    property?: DomsiPropertySelector;
-    css?: DomsiCssSelector;
-    text?: DomsiTextSelector;
-
-    children?: DomsiChildrenSelector;
-}
+export interface DomsiNodeSelector extends AbstractDomsiNodeSelector {};
 
 // This gets returned to the user
-export interface DomsiElement {
-    htmlNode: DomsiHTMLNode;
-    children: DomsiElementChildren;
+export interface DomsiObject {
+    node: HTMLNode;
+    children: DomsiObjectChildren;
 }
 
-export type DomsiHTMLNode = Node;
-
-export interface DomsiElementChildren {
-    [name: string]: DomsiElementChild;
+export interface DomsiObjectChildren {
+    [name: string]: DomsiObjectChild;
 }
 
-export type DomsiElementChild = DomsiElement | DomsiElement[];
+export type DomsiObjectChild = DomsiObject | DomsiObject[];

@@ -1,29 +1,21 @@
-import { DomsiSelector, DomsiHTMLNode } from './public';
+import { AbstractDomsiNodeSelector } from './selectors/abstract-node-selector';
+import { HTMLNode } from './html-node';
+import { DomsiNodeSelector } from './public';
 
 // Internal types
 
 export type DomsiSelectorId = number;
 
-export interface IDomsiSelector extends DomsiSelector {
+export interface IDomsiNodeSelector extends AbstractDomsiNodeSelector {
     id: DomsiSelectorId;
     name: string;
-    originalSelector: DomsiSelector;
-
-    children?: IDomsiChildrenSelector;
+    originalSelector: DomsiNodeSelector;
 }
 
-export type IDomsiChildrenSelector = undefined | IDomsiComplexChildrenSelector;
-
-export interface IDomsiComplexChildrenSelector {
-    [childName: string]: IDomsiChildSelector;
-}
-
-export interface IDomsiChildSelector {
-    selector: IDomsiSelector;
-}
+// Internal computation
 
 export interface DomsiNode {
-    htmlNode: DomsiHTMLNode;
+    htmlNode: HTMLNode;
     parent?: DomsiNode;
     children: DomsiNode[];
     domsiMatch: DomsiMatchMap;
