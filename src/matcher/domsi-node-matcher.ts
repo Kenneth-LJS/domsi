@@ -1,4 +1,5 @@
-import { DomsiNode, IDomsiNodeSelector as DomsiNodeSelector } from '../types/domsi';
+import { DomsiNode } from '../types/domsi';
+import { IDomsiNodeSelector as DomsiNodeSelector } from '../types/selectors/node-selector';
 import { isDomsiChildrenMatch } from './children-matcher';
 import { isNodeMatch } from './node-matcher';
 

@@ -1,16 +1,4 @@
-import { AbstractDomsiNodeSelector } from './selectors/abstract-node-selector';
 import { HTMLNode } from './html-node';
-import { DomsiNodeSelector } from './public';
-
-// Internal types
-
-export type DomsiSelectorId = number;
-
-export interface IDomsiNodeSelector extends AbstractDomsiNodeSelector {
-    id: DomsiSelectorId;
-    name: string;
-    originalSelector: DomsiNodeSelector;
-}
 
 // Internal computation
 

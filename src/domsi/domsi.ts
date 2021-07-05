@@ -1,8 +1,9 @@
 import { isDomsiNodeMatch } from '../matcher/domsi-node-matcher';
-import { DomsiNode, IDomsiNodeSelector as DomsiNodeSelector } from '../types/domsi';
+import { DomsiNode } from '../types/domsi';
 import { HTMLNode } from '../types/html-node';
 import { DomsiNodeSelector as InputDomsiNodeSelector } from '../types/public';
 import { reversed } from '../utils/array';
+import { IDomsiNodeSelector as DomsiNodeSelector } from '../types/selectors/node-selector';
 import { buildDomsiNodes, cloneDomsiSelector, getDomsiMatchedElements, initDomsiSelectors } from '../utils/domsi';
 
 export function domsiFind(inputDomsiSelector: InputDomsiNodeSelector, element?: Node) {

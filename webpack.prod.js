@@ -12,4 +12,9 @@ module.exports = merge(common, {
             type: 'commonjs2',
         },
     },
+    resolve: {
+        alias: {
+            '@env': path.resolve(__dirname, 'src', 'env', 'prod'),
+        },
+    },
 });

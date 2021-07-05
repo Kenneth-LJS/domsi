@@ -1,5 +1,6 @@
 import { DomsiObjectChild, DomsiObject, DomsiNodeSelector as InputDomsiSelector, DomsiObjectChildren } from '../types/public';
-import { DomsiNode, IDomsiNodeSelector as DomsiNodeSelector } from '../types/domsi';
+import { IDomsiNodeSelector as DomsiNodeSelector } from '../types/selectors/node-selector';
+import { DomsiNode } from '../types/domsi';
 import { ROOT_NODE_NAME } from '../constants/domsi';
 import { HTMLNode } from '../types/html-node';
 

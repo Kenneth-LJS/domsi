@@ -1,18 +1,25 @@
-import { PrimitiveName, NonPrimitive } from "../primitive";
+import { BaseValidatorError, ValidatorError } from "./validator-errors";
 
-export type SelectorValidator<T> = undefined | ComplexSelectorValidator<T>;
+export type SelectorValidator<T>
+    = undefined
+    | string
+    | number
+    | ComplexSelectorValidator<T>;
 
 export interface ComplexSelectorValidator<T> {
-    name: string;
     selectorName: string;
-    validPrimitives?: PrimitiveName<T>[];
-    validFields?: SelectorFieldValidator<T>;
+    validate: Validator<T>;
 }
 
-export type SelectorFieldValidator<T> = {
-    [Property in keyof NonPrimitive<T>]: SelectorValidator<NonPrimitive<T>[Property]>;
-}
+export type Validator<T> = (
+    selector: T,
+    getValidate: ValidateFunctionGetter<any>,
+    emitError: (error: BaseValidatorError) => void,
+) => void;
 
-export interface SelectorValidatorContext {
-    [field: string]: any;
-}
+export type ValidateFunctionGetter<T> = (field?: string) => ValidateFunction<T>;
+
+export type ValidateFunction<T> = (
+    selector: T,
+    validator: SelectorValidator<T>,
+) => void;

@@ -1,11 +1,12 @@
-export type DomsiAbstractValueSelector<T>
-    = T
-    | DomsiUndefinedValueSelector
+export type DomsiAbstractValueSelector<T> = T | DomsiComplexAbstractValueSelector<T>;
+
+export type DomsiComplexAbstractValueSelector<T>
+    = DomsiUndefinedValueSelector
     | DomsiNullValueSelector
     | DomsiCompareValueSelector<T>
     | DomsiRegexValueSelector
     | DomsiBinaryBooleanValueSelector<T>
-    | DomsiNotValueSelector<T>;
+    | DomsiUnaryBooleanValueSelector<T>;
 
 export interface DomsiUndefinedValueSelector {
     type: 'undefined';
@@ -37,12 +38,12 @@ export interface DomsiRegexValueSelector {
     flags?: string; // works even if undefined
 }
 
+export interface DomsiUnaryBooleanValueSelector<T> {
+    type: 'not';
+    operand: DomsiAbstractValueSelector<T>;
+}
+
 export interface DomsiBinaryBooleanValueSelector<T> {
     type: 'and' | 'or';
     operands: DomsiAbstractValueSelector<T>[];
-}
-
-export interface DomsiNotValueSelector<T> {
-    type: 'not';
-    operand: DomsiAbstractValueSelector<T>;
 }

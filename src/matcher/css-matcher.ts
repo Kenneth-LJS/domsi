@@ -1,11 +1,12 @@
-import { CssPropertyNames, DomsiCssColorValue, DomsiCssColorValueSelector, DomsiCssSelector } from '../types/selectors/css-selector';
+import { LOAD_RGB_CONVERTER } from '@env';
+
+import { CssPropertyNames, CSSStyleLike, DomsiCssColorValue, DomsiCssColorValueSelector, DomsiCssSelector } from '../types/selectors/css-selector';
 import { isValueMatch } from './value-matcher';
 import { CssColorPropertyNames, CssShorthandExpanders } from '../constants/css-selector';
 import { HTMLNode } from '../types/html-node';
 import { hasOwnProperty } from '../utils/object';
-
-import rgba from 'color-rgba';
 import { DomsiValue } from '../types/selectors/value-selector';
+import rgba from 'color-rgba';
 
 export function isCssMatch(node: HTMLNode, cssSelector: DomsiCssSelector): boolean {
     if (typeof cssSelector === 'undefined') {
@@ -72,18 +73,27 @@ function isColorValueSelectorMatch(value: DomsiCssColorValue, valueSelector: Dom
     return false;
 }
 
-function isColorValueMatch(value1: Exclude<DomsiCssColorValue, undefined>, value2: Exclude<DomsiCssColorValue, undefined>) {
-    const value1Arr = rgba(value1);
-    const value2Arr = rgba(value2);
-    if (typeof value1Arr === 'undefined') {
-        return typeof value2Arr === 'undefined';
-    } else if (typeof value2Arr === 'undefined') {
-        return false;
+export function isColorValueMatch(value1: Exclude<DomsiCssColorValue, undefined>, value2: Exclude<DomsiCssColorValue, undefined>): boolean {
+    if (LOAD_RGB_CONVERTER) {
+        const value1Arr = rgba(value1);
+        const value2Arr = rgba(value2);
+        if (typeof value1Arr === 'undefined') {
+            return typeof value2Arr === 'undefined';
+        } else if (typeof value2Arr === 'undefined') {
+            return false;
+        }
+        return value1Arr[0] == value2Arr[0]
+            && value1Arr[1] == value2Arr[1]
+            && value1Arr[2] == value2Arr[2]
+            && Math.abs(value1Arr[3] - value2Arr[3]) < 0.01;
+    } else {
+        const colorTestElem = document.createElement('div');
+        colorTestElem.style.color = value1;
+        const parsedValue1 = colorTestElem.style.color;
+        colorTestElem.style.color = value2;
+        const parsedValue2 = colorTestElem.style.color;
+        return parsedValue1 == parsedValue2;
     }
-    return value1Arr[0] == value2Arr[0]
-        && value1Arr[1] == value2Arr[1]
-        && value1Arr[2] == value2Arr[2]
-        && Math.abs(value1Arr[3] - value2Arr[3]) < 0.01;
 }
 
 export function expandCssSelector(cssSelector: DomsiCssSelector) {
@@ -106,8 +116,8 @@ export function expandCssSelector(cssSelector: DomsiCssSelector) {
     return Object.assign({}, expandCssSelector, cssSelector);
 }
 
-function normalizeCssPropertyMapNames(cssPropertyMap: Partial<CSSStyleDeclaration>): Partial<CSSStyleDeclaration> {
-    const output = {} as Partial<CSSStyleDeclaration>;
+function normalizeCssPropertyMapNames(cssPropertyMap: {}): CSSStyleLike {
+    const output = {} as CSSStyleLike;
     Object.keys(cssPropertyMap).forEach(property => {
         const normalizedProperty = cssPropertyNameToCamelCase(property) as keyof CssPropertyNames;
         // @ts-expect-error

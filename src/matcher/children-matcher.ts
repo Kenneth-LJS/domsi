@@ -1,7 +1,8 @@
-import { DomsiNode, IDomsiNodeSelector } from '../types/domsi';
+import { DomsiNode } from '../types/domsi';
+import { IDomsiNodeSelector as DomsiNodeSelector } from '../types/selectors/node-selector';
 import { isValueMatch } from './value-matcher';
 
-export function isDomsiChildrenMatch(domsiNode: DomsiNode, selector: IDomsiNodeSelector): boolean {
+export function isDomsiChildrenMatch(domsiNode: DomsiNode, selector: DomsiNodeSelector): boolean {
     if (!selector.children) {
         return true;
     }

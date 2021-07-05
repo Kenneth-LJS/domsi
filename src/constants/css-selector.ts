@@ -1,4 +1,5 @@
-import { default as cssShorthandExpand } from 'css-shorthand-expand';
+import { LOAD_CSS_EXPANDER } from '@env';
+import cssShorthandExpand from 'css-shorthand-expand';
 
 export enum UnwantedCssPropertyNames {
     length = 'length',
@@ -35,24 +36,28 @@ export enum CssColorPropertyNames {
     webkitTextStrokeColor = 'webkitTextStrokeColor',
 }
 
-export const CssShorthandExpanders = {
-    'css-shorthand-expand': {
-        expand: cssShorthandExpand,
-        supportedProperties: [
-            'background',
-            'font',
-            'padding',
-            'margin',
-            'border',
-            'borderWidth',
-            'borderStyle',
-            'borderColor',
-            'borderTop',
-            'borderRight',
-            'borderBottom',
-            'borderLeft',
-            'borderRadius',
-            'outline',
-        ],
-    },
-};
+export const CssShorthandExpanders = (
+    LOAD_CSS_EXPANDER
+        ? {
+            'css-shorthand-expand': {
+                expand: cssShorthandExpand,
+                supportedProperties: [
+                    'background',
+                    'font',
+                    'padding',
+                    'margin',
+                    'border',
+                    'borderWidth',
+                    'borderStyle',
+                    'borderColor',
+                    'borderTop',
+                    'borderRight',
+                    'borderBottom',
+                    'borderLeft',
+                    'borderRadius',
+                    'outline',
+                ],
+            },
+        }
+        : {}
+) as { [expanderName: string]: { expand: any, supportedProperties: string[] } };

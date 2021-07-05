@@ -6,15 +6,6 @@ const { merge } = require('webpack-merge');
 
 const common = require('./webpack.common.js');
 
-const entries = glob.sync('./src/**/*.[jt]s').reduce((entries, entry) => {
-    const srcPath = path.resolve('src');
-    const tempDestPath = path.join('domsi', path.relative(srcPath, entry));
-    const parsed = path.parse(tempDestPath);
-    const destPath = path.join(parsed.dir, parsed.name)
-    entries[destPath] = entry;
-    return entries;
-}, {});
-
 module.exports = merge(common, {
     entry: './dev/src/index.ts',
     devtool: 'inline-source-map',
@@ -25,7 +16,6 @@ module.exports = merge(common, {
         path: path.resolve('build.dev'),
         filename: 'index.js',
         library: {
-            // name: 'domsiDev',
             type: 'module',
         },
     },
@@ -54,6 +44,7 @@ module.exports = merge(common, {
     resolve: {
         alias: {
             '@lib': path.resolve(__dirname, 'src'),
+            '@env': path.resolve(__dirname, 'src', 'env', 'dev'),
         },
     },
     plugins: [
@@ -65,5 +56,5 @@ module.exports = merge(common, {
                 }
             ],
         }),
-    ]
+    ],
 });
