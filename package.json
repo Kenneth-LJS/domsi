@@ -9,9 +9,9 @@
         "dist"
     ],
     "scripts": {
-        "build": "webpack --config webpack.prod.js && npm run buildTypes",
+        "build": "webpack --config webpack.build.js && webpack --config webpack.prod.js && npm run buildTypes",
         "buildTypes": "tsc --outFile dist/index.d.ts",
-        "buildWeb": "webpack --config webpack.web.js",
+        "buildWeb": "webpack --config webpack.build.js && webpack --config webpack.web.js",
         "dev": "webpack --config webpack.dev.js",
         "dev:w": "npm run dev -- --watch",
         "serveDev": "cd build.dev && http-server -p 8000",

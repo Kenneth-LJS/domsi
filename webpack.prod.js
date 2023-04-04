@@ -17,4 +17,12 @@ module.exports = merge(common, {
             '@env': path.resolve(__dirname, 'src', 'env', 'prod'),
         },
     },
+    module: {
+        rules: [
+            {
+                test: path.resolve(__dirname, 'build', 'index.source.js'),
+                type: 'asset/source',
+            },
+        ],
+    },
 });

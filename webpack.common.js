@@ -1,7 +1,7 @@
 module.exports = {
     mode: 'production',
     resolve: {
-        extensions: ["", ".ts", ".js"],
+        extensions: ['', '.ts', '.js'],
     },
     module: {
         rules: [
