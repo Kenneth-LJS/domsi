@@ -5,6 +5,7 @@
         "external-types/**/*.ts"
     ],
     "compilerOptions": {
+        "lib": ["ES2017", "DOM"],
         "outDir": "dist",
         "declaration": true,
         "emitDeclarationOnly": true,

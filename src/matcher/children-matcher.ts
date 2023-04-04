@@ -18,6 +18,8 @@ export function isDomsiChildrenMatch(domsiNode: DomsiNode, selector: DomsiNodeSe
             if (typeof childSelector.count !== 'undefined' && !isValueMatch(childCount, childSelector.count)) {
                 return false;
             }
+        } else if (childSelectorType == 'optional') {
+            return true;
         } else if (childSelectorType == 'none' && childCount > 0) {
             return false;
         }

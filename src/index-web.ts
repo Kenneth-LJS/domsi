@@ -5,9 +5,10 @@
  * Released under the MIT license.
  */
 
-import { domsiFind, domsiFindAll } from './domsi/domsi';
+import { domsiFind, domsiFindAll, validateDomsiSelector } from './domsi/domsi';
 
 export default {
     find: domsiFind,
     findAll: domsiFindAll,
+    validateSelector: validateDomsiSelector,
 };

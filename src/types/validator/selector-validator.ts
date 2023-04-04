@@ -12,12 +12,12 @@ export interface ComplexSelectorValidator<T> {
 }
 
 export type Validator<T> = (
-    selector: T,
+    selector: any,
     getValidate: ValidateFunctionGetter<any>,
     emitError: (error: BaseValidatorError) => void,
 ) => void;
 
-export type ValidateFunctionGetter<T> = (field?: string) => ValidateFunction<T>;
+export type ValidateFunctionGetter<T> = (field?: string | number) => ValidateFunction<T>;
 
 export type ValidateFunction<T> = (
     selector: T,

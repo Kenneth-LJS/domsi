@@ -51,7 +51,7 @@ module.exports = merge(common, {
         new CopyPlugin({
             patterns: [
                 {
-                    from: './dev/src/**/*.html',
+                    from: './dev/src/**/*.(html|png)',
                     to: path.resolve(__dirname, 'build.dev', '[name][ext]'),
                 }
             ],

@@ -7,15 +7,15 @@ import { isTagNameMatch } from './tag-name-matcher';
 import { isTextMatch } from './text-matcher';
 
 export function isNodeMatch(elem: HTMLNode, selector: DomsiNodeSelector): boolean {
-    if (selector.tagName && !isTagNameMatch(elem, selector.tagName)) {
+    if (typeof selector.tagName !== 'undefined' && !isTagNameMatch(elem, selector.tagName)) {
         return false;
-    } else if (selector.attribute && !isAttributeMatch(elem, selector.attribute)) {
+    } else if (typeof selector.attribute !== 'undefined' && !isAttributeMatch(elem, selector.attribute)) {
         return false;
-    } else if (selector.property && !isPropertyMatch(elem, selector.property)) {
+    } else if (typeof selector.property !== 'undefined' && !isPropertyMatch(elem, selector.property)) {
         return false;
-    } else if (selector.css && !isCssMatch(elem, selector.css)) {
+    } else if (typeof selector.css !== 'undefined' && !isCssMatch(elem, selector.css)) {
         return false;
-    } else if (selector.text && !isTextMatch(elem, selector.text)) {
+    } else if (typeof selector.text !== 'undefined' && !isTextMatch(elem, selector.text)) {
         return false;
     }
     return true;

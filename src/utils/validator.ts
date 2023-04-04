@@ -1,9 +1,8 @@
-import { ValidatorError } from "../types/validator/validator-errors";
-import { DomsiAbstractValueSelector, DomsiBinaryBooleanValueSelector, DomsiCompareValueEqualitySelector, DomsiCompareValueOrderingSelector, DomsiCompareValueSelector, DomsiNullValueSelector, DomsiRegexValueSelector, DomsiUnaryBooleanValueSelector, DomsiUndefinedValueSelector } from "../types/selectors/abstract-value-selector";
-import { SelectorValidator, Validator } from "../types/validator/selector-validator";
-import { getInvalidKeys, hasOwnProperty } from "./object";
-import { DomsiUndefinedValueSelectorValidator, DomsiNullValueSelectorValidator, DomsiRegexValueSelectorValidator } from "src/domsi/validate";
-import { AllPrimitiveNames, NonPrimitive } from "src/types/primitive";
+import { DomsiAbstractValueSelector, DomsiBinaryBooleanValueSelector, DomsiCompareValueEqualitySelector, DomsiCompareValueOrderingSelector, DomsiCompareValueSelector, DomsiUnaryBooleanValueSelector } from "../types/selectors/abstract-value-selector";
+import { SelectorValidator, Validator } from '../types/validator/selector-validator';
+import { getInvalidKeys, hasOwnProperty } from './object';
+import { AllPrimitiveNames, NonPrimitive } from '../types/primitive';
+import { DomsiUndefinedValueSelectorValidator, DomsiNullValueSelectorValidator, DomsiRegexValueSelectorValidator } from '../validator/selector-validator';
 
 // Overload function definition
 export function makeValidator<T>(

@@ -1,4 +1,5 @@
 import { LOAD_CSS_EXPANDER } from '@env';
+
 import cssShorthandExpand from 'css-shorthand-expand';
 
 export enum UnwantedCssPropertyNames {
@@ -36,9 +37,9 @@ export enum CssColorPropertyNames {
     webkitTextStrokeColor = 'webkitTextStrokeColor',
 }
 
-export const CssShorthandExpanders = (
-    LOAD_CSS_EXPANDER
-        ? {
+export const CssShorthandExpanders = (() => {
+    if (LOAD_CSS_EXPANDER) {
+        return {
             'css-shorthand-expand': {
                 expand: cssShorthandExpand,
                 supportedProperties: [
@@ -57,7 +58,9 @@ export const CssShorthandExpanders = (
                     'borderRadius',
                     'outline',
                 ],
-            },
-        }
-        : {}
-) as { [expanderName: string]: { expand: any, supportedProperties: string[] } };
+            }
+        };
+    } else {
+        return {};
+    }
+})() as { [expanderName: string]: { expand: any, supportedProperties: string[] } };

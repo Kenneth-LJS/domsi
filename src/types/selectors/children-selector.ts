@@ -13,4 +13,4 @@ export interface DomsiChildSelector<T> {
     selector: T;
 }
 
-export type DomsiChildSelectorType = 'single' | 'multiple' | 'none';
+export type DomsiChildSelectorType = 'single' | 'multiple' | 'optional'| 'none';

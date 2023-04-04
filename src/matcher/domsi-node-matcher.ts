@@ -16,7 +16,7 @@ export function isDomsiNodeMatch(domsiNode: DomsiNode, selector: DomsiNodeSelect
         return false;
     }
 
-    // Make sure attributes/props/css style/text matches the selector
+    // Make sure attributes/props/css/text/etc matches the selector
     if (!isNodeMatch(domsiNode.htmlNode, selector)) {
         return false;
     }

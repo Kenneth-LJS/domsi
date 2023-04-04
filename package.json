@@ -1,6 +1,7 @@
 {
     "name": "domsi",
     "version": "1.0.1",
+    "author": "Kenneth-LJS <kenneth_ljs@live.com> (https://github.com/Kenneth-LJS)",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -14,6 +15,8 @@
         "dev": "webpack --config webpack.dev.js",
         "dev:w": "npm run dev -- --watch",
         "serveDev": "cd build.dev && http-server -p 8000",
+        "checkSideEffects:prod": "check-side-effects test.ts --cwd src --resolve-externals true",
+        "checkSideEffects:web": "check-side-effects test.ts",
         "prepublish": "npm run build",
         "lint": "eslint src/**",
         "test": "test"
@@ -22,14 +25,20 @@
         "type": "git",
         "url": "git+https://Kenneth-LJS@github.com/Kenneth-LJS/domsi.git"
     },
-    "author": "kenneth_ljs <kenneth_ljs@live.com> (https://github.com/Kenneth-LJS)",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/Kenneth-LJS/domsi/issues"
     },
     "homepage": "https://github.com/Kenneth-LJS/domsi#readme",
     "keywords": [
-        "test"
+        "dom",
+        "javascript",
+        "typescript",
+        "scraper",
+        "scraping",
+        "html",
+        "content extraction",
+        "web"
     ],
     "devDependencies": {
         "@babel/core": "^7.14.6",
@@ -40,6 +49,7 @@
         "@typescript-eslint/eslint-plugin": "^4.28.1",
         "@typescript-eslint/parser": "^4.28.1",
         "babel-loader": "^8.2.2",
+        "check-side-effects": "^0.0.23",
         "copy-webpack-plugin": "^9.0.1",
         "eslint": "^7.30.0",
         "eslint-config-prettier": "^8.3.0",
@@ -55,4 +65,5 @@
         "color-rgba": "^2.2.3",
         "css-shorthand-expand": "^1.2.0"
     },
+    "sideEffects": false
 }

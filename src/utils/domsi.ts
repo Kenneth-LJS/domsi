@@ -64,6 +64,10 @@ export function buildDomsiTree(elem: HTMLNode, parentNode?: DomsiNode) {
         children.push(buildDomsiTree(childNode, treeNode));
     });
     treeNode.children = children;
+
+    // @ts-ignore
+    treeNode.htmlNode.domsiNode = treeNode; // debug
+
     return treeNode;
 }
 
@@ -88,7 +92,7 @@ export function domsiNodeToDomsiElement(node: DomsiNode, selector: DomsiNodeSele
             const childSelector = childSelectorData.selector;
             const childSelectorID = childSelector.id;
 
-            let childrenResult: DomsiObjectChild;
+            let childrenResult: DomsiObjectChild | undefined;
             if (childSelectorType == 'single') {
                 // First matched child node would be the last matched child in the list (due to the array reversals)
                 const matchedChildren = node.domsiChildrenMatch[childSelectorID];
@@ -98,12 +102,23 @@ export function domsiNodeToDomsiElement(node: DomsiNode, selector: DomsiNodeSele
                 const matchedChildren = node.domsiChildrenMatch[childSelectorID];
                 childrenResult = matchedChildren.map((childNode: any) => domsiNodeToDomsiElement(childNode, childSelector));
                 childrenResult.reverse();
+            } else if (childSelectorType == 'optional') {
+                const matchedChildren = node.domsiChildrenMatch[childSelectorID];
+                if (matchedChildren.length > 0) {
+                    childrenResult = domsiNodeToDomsiElement(matchedChildren[0], childSelector);
+                } else {
+                    childrenResult = undefined;
+                }
+            } else if (childSelectorType == 'none') {
+                continue;
             } else {
                 // todo: raise Exception
                 continue;
             }
 
-            children[identifier] = childrenResult;
+            if (childrenResult) {
+                children[identifier] = childrenResult;
+            }
 
             // todo: check if childIsTransparent when childSelector type is not single
             // todo: check if child overrides parent name property
