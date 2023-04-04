@@ -4,10 +4,10 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-    entry: './src/index-web.ts',
+    entry: './src/index-build.ts',
     output: {
-        path: path.resolve('dist.web'),
-        filename: 'index.js',
+        path: path.resolve('build'),
+        filename: 'index.source.js',
         library: {
             name: 'domsi',
             type: 'var',
@@ -22,13 +22,5 @@ module.exports = merge(common, {
     externals: {
         'color-rgba': 'null',
         'css-shorthand-expand': 'null',
-    },
-    module: {
-        rules: [
-            {
-                test: path.resolve(__dirname, 'build', 'index.source.js'),
-                type: 'asset/source',
-            },
-        ],
     },
 });

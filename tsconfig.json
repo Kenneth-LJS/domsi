@@ -1,23 +1,29 @@
 {
     "include": [
         "src/**/*.js",
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "external-types/**/*.ts"
     ],
     "compilerOptions": {
+        "lib": ["ES2017", "DOM"],
         "outDir": "dist",
         "declaration": true,
         "emitDeclarationOnly": true,
+        "esModuleInterop": true,
         "allowJs": true,
         "forceConsistentCasingInFileNames": true,
-        "experimentalDecorators": true,
         "noImplicitAny": true,
-        "noUnusedParameters": true,
+        // "noUnusedParameters": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "noUnusedLocals": true,
+        // "noUnusedLocals": true,
         "skipLibCheck": true,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "strictFunctionTypes": true,
-        "suppressImplicitAnyIndexErrors": true
+        "baseUrl": "./",
+        "paths": {
+            // "@lib/*": ["src/*"],
+            "@env": ["src/env/prod"],
+        }
     }
 }
