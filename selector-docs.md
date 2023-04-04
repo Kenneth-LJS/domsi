@@ -165,6 +165,7 @@ The `DomsiChildSelector` matches a specific child on the parent. It need not be 
 ```
 
 **type**
+
 If the `type` is `single`, then the selector matches if at least 1 child of that element matches the child selector. The parent’s `children.[childname]` property will contain a single `DomsiObject`.
 
 If the `type` is `multiple`, then the selector matches if the number of child element that matches the child selector ALSO matches the `count` selector. If no `count` selector is specified, then it automatically matches. The parent’s `children.[childname]` property will contain an array of `DomsiObject`s.
