@@ -16,7 +16,7 @@ Download [/build/index.source.js](./build/index.source.js) and put that into you
 
 ### For Node.JS projects
 
-You can use Domsi by importing `initDomsi` from the `domsi` module.
+You can use Domsi by importing `initDomsi` from the `domsi` module. In the following example, we’re using the `puppeteer` library to interface with the browser.
 
 ```javascript
 const { initDomsi } = require('domsi');
@@ -43,6 +43,34 @@ const puppeteer = require('puppeteer');
 })();
 ```
 
+#### Aliasing Domsi With A Different Variable Name
+
+If you know the web page you’re scraping has an existing variable named `domsi`, then you can pass in a variable name in `initDomsi` to initialize it under a different variable name.
+
+```javascript
+await page.evaluate(initDomsi('domsiAlias'));
+
+await page.evaluate(() => {
+    return domsiAlias.findAll({ tagName: 'img' }).map((result) => result.node.getAttribute('src'));
+});
+```
+
+#### Executing Domsi Anonymously
+
+If you need to run a Domsi query without polluting the global environment, you can run it in an anonymous function. In this case, you no longer need to run the `initDomsi` function.
+
+```javascript
+const { runDomsiAnonymously } = require('domsi');
+
+...
+
+await page.evaluate(runDomsiAnonymously((domsi) => {
+    return domsi.findAll({ tagName: 'img' }).map((result) => result.node.getAttribute('src'));
+}));
+```
+
+When called like this, the Domsi library will be initialized in an anonymous function and the query is executed there. Each call will have to re-initialize the Domsi library, so if performance is critical, you are advised to use `initDomsi`.
+
 ### For non-Node.JS projects
 
 Load the Domsi source file in your project and evaluate it in your automated browser before running Domsi queries. Here is an example in Python 3.
@@ -63,6 +91,8 @@ print(results)
 
 driver.close()
 ```
+
+If I have the time, I will make a Python wrapper for `initDomsi` and `runDomsiAnonymously` too.
 
 ## Query Selector
 
@@ -88,6 +118,3 @@ All matches returned by `domsi.find` and `domsi.findAll` are `DomsiObject`s. The
 ```
 
 Documentation on the children returned can be found in [DomsiChildrenSelector](./selector-docs.md#domsichildrenselector).
-
-
-
